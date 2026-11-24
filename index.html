@@ -712,7 +712,7 @@
       var boardAuth = window.BOARD_AUTH || { enabled: false, validityHours: 72, encrypted: false, progressUrl: "./progress.json" };
       if (boardAuth.progressUrl) CLOUD_PROGRESS_URL = boardAuth.progressUrl;
 
-      var QUOTES = [
+      var MORNING_QUOTES = [
         "永远没有定数。",
         "我明媚也自由。",
         "我等春来，与我共鸣。",
@@ -770,6 +770,9 @@
         "把愿望说小声一点，然后去做。",
         "天亮了，故事继续写。",
         "先站稳，再望山河。",
+      ];
+
+      var NOON_QUOTES = [
         "不改变，不顺万千。",
         "我知我喜乐，纵情跋涉。",
         "不再为蠢事后悔皱眉。",
@@ -831,6 +834,9 @@
         "把今天过成可回顾的样子。",
         "热爱无需观众。",
         "把脚步踩实，回声自来。",
+      ];
+
+      var SLEEP_QUOTES = [
         "我的太阳西沉是为了再度升起。",
         "我被高山围绕，山水自为我祈祷。",
         "我所理解的喜欢是惦记。",
@@ -890,7 +896,32 @@
         "先沉下去，才会浮上来。",
       ];
 
-var DEFAULT_PHASES = [
+      function beijingHour() {
+        var parts = new Intl.DateTimeFormat("en-US", {
+          timeZone: "Asia/Shanghai",
+          hour: "numeric",
+          hour12: false
+        }).formatToParts(new Date());
+        var h = parts.find(function (p) { return p.type === "hour"; });
+        return Number(h && h.value);
+      }
+
+      function currentQuotePool() {
+        var h = beijingHour();
+        // morning 05-11 / noon 12-21 / sleep 22-04 (Beijing)
+        if (h >= 5 && h < 12) return MORNING_QUOTES;
+        if (h >= 12 && h < 22) return NOON_QUOTES;
+        return SLEEP_QUOTES;
+      }
+
+      function currentQuoteMode() {
+        var h = beijingHour();
+        if (h >= 5 && h < 12) return "morning";
+        if (h >= 12 && h < 22) return "noon";
+        return "sleep";
+      }
+
+      var DEFAULT_PHASES = [
         {
           id: "p0",
           title: "预热准备：单机多模态数据入门",
@@ -975,7 +1006,9 @@ var DEFAULT_PHASES = [
 
       var state = loadState();
       var selectedHour = 1.5;
-      var quoteIdx = Math.floor(Date.now() / 86400000) % QUOTES.length;
+      var activeQuoteMode = currentQuoteMode();
+      var quotePool = currentQuotePool();
+      var quoteIdx = Math.floor(Date.now() / 86400000) % quotePool.length;
 
       function saveState() {
         try {
@@ -1228,7 +1261,7 @@ var DEFAULT_PHASES = [
 
         document.getElementById("yesterdayText").textContent = getYesterdayContent();
         document.getElementById("todayTopicText").textContent = getTodayTopic();
-        document.getElementById("quoteText").textContent = QUOTES[quoteIdx];
+        document.getElementById("quoteText").textContent = quotePool[quoteIdx];
 
         // Progress table
         var total = 0, done = 0;
@@ -1415,7 +1448,7 @@ var DEFAULT_PHASES = [
           getTodayTopic(),
           "",
           "3. 今日鼓励：",
-          QUOTES[quoteIdx],
+          quotePool[quoteIdx],
           "",
           "4. 进度表：[" + bar + "] " + pct + "% (" + done + "/" + total + ")",
           phaseLines.join("\n")
@@ -1525,8 +1558,15 @@ var DEFAULT_PHASES = [
       });
 
       document.getElementById("nextQuoteBtn").addEventListener("click", function () {
-        quoteIdx = (quoteIdx + 1) % QUOTES.length;
-        document.getElementById("quoteText").textContent = QUOTES[quoteIdx];
+        var mode = currentQuoteMode();
+        if (mode !== activeQuoteMode) {
+          activeQuoteMode = mode;
+          quotePool = currentQuotePool();
+          quoteIdx = 0;
+        } else {
+          quoteIdx = (quoteIdx + 1) % quotePool.length;
+        }
+        document.getElementById("quoteText").textContent = quotePool[quoteIdx];
       });
 
       document.getElementById("quickDoneTodayBtn").addEventListener("click", function () {
