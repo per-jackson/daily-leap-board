@@ -888,7 +888,174 @@
         "夜深了，允许脆弱。",
         "把明天放在门外过夜。",
         "先沉下去，才会浮上来。",
-      ]
+      ];
+
+var DEFAULT_PHASES = [
+        {
+          id: "p0",
+          title: "预热准备：单机多模态数据入门",
+          period: "已完成起点",
+          collapsed: true,
+          tasks: [
+            { id: "t0", text: "完成 LeRobot/PushT 解析、时序可视化与 qc_pusht.py 基础质检", tags: ["已完成", "起点"], key: false, done: true }
+          ]
+        },
+        {
+          id: "p1",
+          title: "阶段一：单机脚本 → 分布式工程化",
+          period: "2026.12（第 1–4 周）",
+          collapsed: false,
+          tasks: [
+            { id: "t1", text: "把 qc_pusht.py 重构为可配置 CLI 工具，输出 JSON/HTML 结构化质检报告", tags: ["Week 1", "作品集"], key: true, done: false },
+            { id: "t2", text: "补齐 ROS2 Bag / MCAP 多模态机器人数据格式解析与时间戳同步校验", tags: ["Week 2", "具身/智驾"], key: true, done: false },
+            { id: "t3", text: "引入 Ray Data 改写视频解码、抽帧与过滤流水线，跑出单机 vs 并发吞吐压测", tags: ["Week 3", "核心壁垒"], key: true, done: false },
+            { id: "t4", text: "掌握 Parquet / DuckDB / Lance 列式多模态存储与检索优化", tags: ["Week 4", "数据工程"], key: false, done: false },
+            { id: "t5", text: "收口 GitHub 作品集 V1：附架构图、压测指标表和一键复现脚本", tags: ["里程碑", "作品集"], key: true, done: false }
+          ]
+        },
+        {
+          id: "p2",
+          title: "阶段二：数据治理 + VLM 打标 + 评测闭环",
+          period: "2027.01（第 5–8 周）",
+          collapsed: false,
+          tasks: [
+            { id: "t6", text: "用 MinIO (S3) + PostgreSQL 搭轻量多模态数据资产目录（元数据/标签检索）", tags: ["Week 5", "平台能力"], key: true, done: false },
+            { id: "t7", text: "实现数据版本管理与血缘追踪（原始数据 → 清洗脚本版本 → 训练子集映射）", tags: ["Week 6", "可复现"], key: false, done: false },
+            { id: "t8", text: "接入开源 VLM（Qwen-VL）做视频片段自动语义切分、质量打分与失败初筛", tags: ["Week 7", "AI原生"], key: true, done: false },
+            { id: "t9", text: "搭轻量 Web 筛选看板（Streamlit/Gradio），支持回放筛选与一键导出", tags: ["Week 7", "可视化"], key: false, done: false },
+            { id: "t10", text: "跑通 1 次消融实验：脏数据 vs 质检数据微调策略模型，记录量化成功率提升", tags: ["Week 8", "面试杀手锏"], key: true, done: false }
+          ]
+        },
+        {
+          id: "p3",
+          title: "阶段三：简历重构 + 面试冲刺 + 春招投递",
+          period: "2027.02 — 2027.03（第 9–12 周）",
+          collapsed: true,
+          tasks: [
+            { id: "t11", text: "重构共达地 2 年简历：突出工业视觉数据闭环、Bad Case 挖掘与端侧交付", tags: ["Week 9", "简历"], key: true, done: false },
+            { id: "t12", text: "把作品集抽成通用多模态时序引擎，准备智驾/大模型/具身三套定制话术", tags: ["Week 9", "跨赛道"], key: true, done: false },
+            { id: "t13", text: "攻克高频工程面试题（Python并发/PyAV解码/标定同步/Ray原理/去重血缘）", tags: ["Week 10", "面试"], key: true, done: false },
+            { id: "t14", text: "2月下旬启动第一梯队投递：深圳智驾数据闭环（卓驭/元戎/比亚迪/小鹏/华为）", tags: ["Week 11", "第一梯队"], key: true, done: false },
+            { id: "t15", text: "3月冲刺第二梯队：腾讯Robotics X、自变量、优必选、逐际、智平方、帕西尼", tags: ["Week 12", "冲刺Offer"], key: true, done: false }
+          ]
+        }
+      ];
+
+      function todayStr() {
+        var d = new Date();
+        return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+      }
+
+      function loadState() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("ai_data_career_tracker_v1");
+          if (raw) {
+            var parsed = JSON.parse(raw);
+            if (parsed && Array.isArray(parsed.phases)) {
+              return parsed;
+            }
+          }
+        } catch (e) {}
+        return {
+          phases: JSON.parse(JSON.stringify(DEFAULT_PHASES)),
+          reviews: [
+            {
+              id: "r_init",
+              date: todayStr(),
+              type: "每日复盘",
+              hours: 2,
+              output: "完成 LeRobot / PushT 206 条回合基础数据质检（qc_pusht.py）与轨迹时序可视化（plot_timeline.py）。",
+              blocker: "确立 3 个月在职跃迁路线：多模态/具身/智驾 AI 数据闭环工程师。",
+              nextStep: "把 qc_pusht.py 重构为可配置 CLI 工具，支持导出结构化 JSON 质检报告。"
+            }
+          ],
+          customTodayTopic: ""
+        };
+      }
+
+      var state = loadState();
+      var selectedHour = 1.5;
+      var quoteIdx = Math.floor(Date.now() / 86400000) % QUOTES.length;
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+          showToast("保存失败：浏览器存储空间不足");
+        }
+      }
+
+      function showToast(msg) {
+        var el = document.getElementById("toast");
+        el.textContent = msg;
+        el.classList.add("show");
+        clearTimeout(showToast._t);
+        showToast._t = setTimeout(function () { el.classList.remove("show"); }, 2200);
+      }
+
+      function escapeHtml(str) {
+        return String(str || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function getNextPendingTask() {
+        for (var i = 0; i < state.phases.length; i++) {
+          var tasks = state.phases[i].tasks;
+          for (var j = 0; j < tasks.length; j++) {
+            if (!tasks[j].done) return tasks[j].text;
+          }
+        }
+        return "全部核心链路节点已完成，专注面试复盘与 Offer 谈判！";
+      }
+
+      function getYesterdayContent() {
+        if (state.cloudYesterday && String(state.cloudYesterday).trim()) {
+          return String(state.cloudYesterday).trim();
+        }
+        var today = todayStr();
+        var prev = state.reviews.find(function (r) { return r.date < today && r.output && r.output.trim(); });
+        if (prev) return "（" + prev.date + "）" + prev.output;
+        var latest = state.reviews.find(function (r) { return r.output && r.output.trim(); });
+        if (latest) return "（最近记录 " + latest.date + "）" + latest.output;
+        return "暂无昨日记录，今晚去「每日复盘」记下 3 句话，明天这里会自动提醒你。";
+      }
+
+      function getTodayTopic() {
+        if (state.customTodayTopic && state.customTodayTopic.trim()) {
+          return state.customTodayTopic.trim();
+        }
+        var latestNext = state.reviews.find(function (r) { return r.nextStep && r.nextStep.trim(); });
+        if (latestNext) {
+          return latestNext.nextStep.trim();
+        }
+        return getNextPendingTask();
+      }
+
+      function setCloudSyncStatus(text) {
+        var el = document.getElementById("cloudSyncStatus");
+        if (el) el.textContent = text;
+      }
+
+      function applyProgressJson(data) {
+        if (!data || !Array.isArray(data.tasks)) return false;
+        if (data.spring_recruit_date) {
+          SPRING_RECRUIT_DATE = data.spring_recruit_date;
+        }
+        state.cloudYesterday = data.yesterday_learned || "";
+        if (data.today_topic && String(data.today_topic).trim()) {
+          state.customTodayTopic = String(data.today_topic).trim();
+        }
+        var doneMap = {};
+        data.tasks.forEach(function (t) {
+          if (t && t.id) doneMap[t.id] = !!t.done;
+        });
+        state.phases.forEach(function (phase) {
+          (phase.tasks || []).forEach(function (task) {
+            if (Object.prototype.hasOwnProperty.call(doneMap, task.id)) {
+              task.done = doneMap[task.id];
             }
           });
         });
