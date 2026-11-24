@@ -752,6 +752,24 @@
         "把愿望放进背包就走。",
         "自由是早起后的第一口空气。",
         "我可以慢，但不会停。",
+        "晨风不疾，心也不慌。",
+        "我有旷野，亦有灯火。",
+        "把期待调成轻声。",
+        "今日也配得上微笑出门。",
+        "不追热闹，追自己的节奏。",
+        "阳光一到，阴影就短了。",
+        "先悦己，再远行。",
+        "把勇气放在口袋最上面。",
+        "我与朝霞，约好了见面。",
+        "开始本身，就很动人。",
+        "心向宽处，步向明处。",
+        "不必盛大，但要真实。",
+        "把善意留给今天的自己。",
+        "风来时，就学会扬帆。",
+        "我可以普通，也可以发光。",
+        "把愿望说小声一点，然后去做。",
+        "天亮了，故事继续写。",
+        "先站稳，再望山河。",
         "不改变，不顺万千。",
         "我知我喜乐，纵情跋涉。",
         "不再为蠢事后悔皱眉。",
@@ -795,6 +813,24 @@
         "我在场，就已经很了不起。",
         "生活有褶皱，我也有光泽。",
         "稳住呼吸，继续把事做成。",
+        "把热爱藏进日常。",
+        "一句真话，胜过千句表演。",
+        "心软可以，脊梁要硬。",
+        "把耐心当成手艺。",
+        "热闹之外，还有更深的静。",
+        "我选择长期主义。",
+        "把结果交给时间检验。",
+        "认真，是最稳的捷径。",
+        "把情绪安顿好再出发。",
+        "生活粗糙，我也精致应对。",
+        "先把小事做漂亮。",
+        "心有定力，事有余地。",
+        "把复杂过成简单。",
+        "我在耕耘，不是在焦虑。",
+        "稳住，比逞强更有力量。",
+        "把今天过成可回顾的样子。",
+        "热爱无需观众。",
+        "把脚步踩实，回声自来。",
         "我的太阳西沉是为了再度升起。",
         "我被高山围绕，山水自为我祈祷。",
         "我所理解的喜欢是惦记。",
@@ -834,123 +870,25 @@
         "温柔收工，也是一种本事。",
         "把今天轻轻放进夜里。",
         "明天见，今日先谢幕。",
+        "夜里安静，刚好愈合。",
+        "把争强留给白天。",
+        "月光不吵，你也别吵自己。",
+        "先睡饱，再想远。",
+        "把未说完的话，交给梦。",
+        "今夜只收，不扩张。",
+        "枕头比手机更懂你。",
+        "把紧绷的肩，还给夜晚。",
+        "睡意是最温柔的许可。",
+        "把今天轻轻盖上。",
+        "星子不急，你也不急。",
+        "先安息，再重生。",
+        "把世界外置，把自己内收。",
+        "晚安是一种自我成全。",
+        "把灯关掉，把心打开给睡眠。",
+        "夜深了，允许脆弱。",
+        "把明天放在门外过夜。",
+        "先沉下去，才会浮上来。",
       ]
-
-      function todayStr() {
-        var d = new Date();
-        return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-      }
-
-      function loadState() {
-        try {
-          var raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("ai_data_career_tracker_v1");
-          if (raw) {
-            var parsed = JSON.parse(raw);
-            if (parsed && Array.isArray(parsed.phases)) {
-              return parsed;
-            }
-          }
-        } catch (e) {}
-        return {
-          phases: JSON.parse(JSON.stringify(DEFAULT_PHASES)),
-          reviews: [
-            {
-              id: "r_init",
-              date: todayStr(),
-              type: "每日复盘",
-              hours: 2,
-              output: "完成 LeRobot / PushT 206 条回合基础数据质检（qc_pusht.py）与轨迹时序可视化（plot_timeline.py）。",
-              blocker: "确立 3 个月在职跃迁路线：多模态/具身/智驾 AI 数据闭环工程师。",
-              nextStep: "把 qc_pusht.py 重构为可配置 CLI 工具，支持导出结构化 JSON 质检报告。"
-            }
-          ],
-          customTodayTopic: ""
-        };
-      }
-
-      var state = loadState();
-      var selectedHour = 1.5;
-      var quoteIdx = Math.floor(Date.now() / 86400000) % QUOTES.length;
-
-      function saveState() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        } catch (e) {
-          showToast("保存失败：浏览器存储空间不足");
-        }
-      }
-
-      function showToast(msg) {
-        var el = document.getElementById("toast");
-        el.textContent = msg;
-        el.classList.add("show");
-        clearTimeout(showToast._t);
-        showToast._t = setTimeout(function () { el.classList.remove("show"); }, 2200);
-      }
-
-      function escapeHtml(str) {
-        return String(str || "")
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;");
-      }
-
-      function getNextPendingTask() {
-        for (var i = 0; i < state.phases.length; i++) {
-          var tasks = state.phases[i].tasks;
-          for (var j = 0; j < tasks.length; j++) {
-            if (!tasks[j].done) return tasks[j].text;
-          }
-        }
-        return "全部核心链路节点已完成，专注面试复盘与 Offer 谈判！";
-      }
-
-      function getYesterdayContent() {
-        if (state.cloudYesterday && String(state.cloudYesterday).trim()) {
-          return String(state.cloudYesterday).trim();
-        }
-        var today = todayStr();
-        var prev = state.reviews.find(function (r) { return r.date < today && r.output && r.output.trim(); });
-        if (prev) return "（" + prev.date + "）" + prev.output;
-        var latest = state.reviews.find(function (r) { return r.output && r.output.trim(); });
-        if (latest) return "（最近记录 " + latest.date + "）" + latest.output;
-        return "暂无昨日记录，今晚去「每日复盘」记下 3 句话，明天这里会自动提醒你。";
-      }
-
-      function getTodayTopic() {
-        if (state.customTodayTopic && state.customTodayTopic.trim()) {
-          return state.customTodayTopic.trim();
-        }
-        var latestNext = state.reviews.find(function (r) { return r.nextStep && r.nextStep.trim(); });
-        if (latestNext) {
-          return latestNext.nextStep.trim();
-        }
-        return getNextPendingTask();
-      }
-
-      function setCloudSyncStatus(text) {
-        var el = document.getElementById("cloudSyncStatus");
-        if (el) el.textContent = text;
-      }
-
-      function applyProgressJson(data) {
-        if (!data || !Array.isArray(data.tasks)) return false;
-        if (data.spring_recruit_date) {
-          SPRING_RECRUIT_DATE = data.spring_recruit_date;
-        }
-        state.cloudYesterday = data.yesterday_learned || "";
-        if (data.today_topic && String(data.today_topic).trim()) {
-          state.customTodayTopic = String(data.today_topic).trim();
-        }
-        var doneMap = {};
-        data.tasks.forEach(function (t) {
-          if (t && t.id) doneMap[t.id] = !!t.done;
-        });
-        state.phases.forEach(function (phase) {
-          (phase.tasks || []).forEach(function (task) {
-            if (Object.prototype.hasOwnProperty.call(doneMap, task.id)) {
-              task.done = doneMap[task.id];
             }
           });
         });
