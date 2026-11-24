@@ -1,0 +1,18 @@
+{
+  "name": "AI数据闭环 · 每日跃迁",
+  "short_name": "每日跃迁",
+  "description": "3个月AI数据闭环学习进度表、每日复盘与提醒工具",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
