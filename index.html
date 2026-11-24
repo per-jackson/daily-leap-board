@@ -497,7 +497,10 @@
             <div class="card-title" style="margin-bottom:2px;">云端进度同步</div>
             <div class="top-sub" id="cloudSyncStatus">打开页面时自动拉取 progress.json（与飞书同源）</div>
           </div>
-          <button type="button" class="mini-btn" id="syncCloudBtn">立即同步</button>
+          <div style="display:flex; gap:8px; flex-shrink:0;">
+            <button type="button" class="mini-btn" id="reloginBtn">重新登录</button>
+            <button type="button" class="mini-btn" id="syncCloudBtn">立即同步</button>
+          </div>
         </div>
       </div>
 
@@ -1015,6 +1018,10 @@
             setCloudSyncStatus("同步失败：需要外网，或登录已失效");
             if (showToastMsg) showToast("同步失败，请确认外网或重新登录");
             console.warn("cloud sync failed", err);
+            if (boardAuth.enabled && boardAuth.encrypted) {
+              clearAuthSession();
+              showAuthGate("登录已失效或密码已更新，请重新输入密码");
+            }
           });
       }
 
@@ -1476,6 +1483,15 @@
             return;
           }
           syncFromCloud(true);
+        });
+      }
+      var reloginBtn = document.getElementById("reloginBtn");
+      if (reloginBtn) {
+        reloginBtn.addEventListener("click", function () {
+          clearAuthSession();
+          var input = document.getElementById("authPassword");
+          if (input) input.value = "";
+          showAuthGate("请输入最新看板密码");
         });
       }
 
