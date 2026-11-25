@@ -934,11 +934,11 @@
         {
           id: "p1",
           title: "阶段一：单机脚本 → 分布式工程化",
-          period: "进行中 · 当前第 1 步",
+          period: "进行中 · 当前第 2 步 MCAP",
           collapsed: false,
           tasks: [
-            { id: "t1", text: "将 qc_pusht.py 封装为可配置 CLI 工具 + JSON/HTML 结构化报告", tags: ["当前", "作品集"], key: true, done: false },
-            { id: "t2", text: "补齐 ROS2 Bag / MCAP 多模态格式解析与时间戳同步校验", tags: ["具身/智驾"], key: true, done: false },
+            { id: "t1", text: "将 qc_pusht.py 封装为可配置 CLI 工具 + JSON/HTML 结构化报告", tags: ["已完成", "作品集"], key: true, done: true },
+            { id: "t2", text: "补齐 ROS2 Bag / MCAP 多模态格式解析与时间戳同步校验", tags: ["当前", "具身/智驾"], key: true, done: false },
             { id: "t3", text: "引入 Ray Data 跑并发视频解码与清洗，测出吞吐提升指标", tags: ["核心壁垒"], key: true, done: false },
             { id: "t4", text: "掌握 Parquet / DuckDB / Lance 列式多模态存储检索", tags: ["数据工程"], key: false, done: false },
             { id: "t5", text: "收口 GitHub 作品集 V1（架构图 + 压测表 + 复现脚本）", tags: ["里程碑", "作品集"], key: true, done: false }
@@ -995,12 +995,12 @@
               date: todayStr(),
               type: "每日复盘",
               hours: 2.5,
-              output: "预热阶段收口：PushT 全量质检（206 ep / 25650 帧）、plot_timeline、01-质检报告与 ep107 样例、week03 知识点；三口径已落盘。",
+              output: "阶段一第 1 步收口：qc_pusht CLI、summary.json + report.html、qc-cli复现说明；历史对话决策已对齐到本工程。",
               blocker: "每日时间盒 早30min+午1h+晚1h；优先在职做作品，有 offer 再离职。",
-              nextStep: "阶段一·第 1 步：将 qc_pusht.py 升级为可配置 CLI，输出 summary.json + report.html。"
+              nextStep: "阶段一·第 2 步：ROS2 Bag / MCAP 多模态解析与时间戳同步校验。"
             }
           ],
-          customTodayTopic: "阶段一·第 1 步：将 qc_pusht.py 升级为可配置 CLI，输出 summary.json + report.html；每日时间盒 早30min+午1h+晚1h。"
+          customTodayTopic: "阶段一·第 2 步：ROS2 Bag / MCAP 多模态解析与时间戳同步校验；每日时间盒 早30min+午1h+晚1h。"
         };
       }
 
