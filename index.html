@@ -925,49 +925,49 @@
         {
           id: "p0",
           title: "预热准备：单机多模态数据入门",
-          period: "已完成起点",
+          period: "已完成（2026-11）",
           collapsed: true,
           tasks: [
-            { id: "t0", text: "完成 LeRobot/PushT 解析、时序可视化与 qc_pusht.py 基础质检", tags: ["已完成", "起点"], key: false, done: true }
+            { id: "t0", text: "完成 LeRobot/PushT 解析、时序绘图、基础质检、质检报告与知识点", tags: ["已完成", "起点"], key: false, done: true }
           ]
         },
         {
           id: "p1",
           title: "阶段一：单机脚本 → 分布式工程化",
-          period: "2026.12（第 1–4 周）",
+          period: "进行中 · 当前第 1 步",
           collapsed: false,
           tasks: [
-            { id: "t1", text: "把 qc_pusht.py 重构为可配置 CLI 工具，输出 JSON/HTML 结构化质检报告", tags: ["Week 1", "作品集"], key: true, done: false },
-            { id: "t2", text: "补齐 ROS2 Bag / MCAP 多模态机器人数据格式解析与时间戳同步校验", tags: ["Week 2", "具身/智驾"], key: true, done: false },
-            { id: "t3", text: "引入 Ray Data 改写视频解码、抽帧与过滤流水线，跑出单机 vs 并发吞吐压测", tags: ["Week 3", "核心壁垒"], key: true, done: false },
-            { id: "t4", text: "掌握 Parquet / DuckDB / Lance 列式多模态存储与检索优化", tags: ["Week 4", "数据工程"], key: false, done: false },
-            { id: "t5", text: "收口 GitHub 作品集 V1：附架构图、压测指标表和一键复现脚本", tags: ["里程碑", "作品集"], key: true, done: false }
+            { id: "t1", text: "将 qc_pusht.py 封装为可配置 CLI 工具 + JSON/HTML 结构化报告", tags: ["当前", "作品集"], key: true, done: false },
+            { id: "t2", text: "补齐 ROS2 Bag / MCAP 多模态格式解析与时间戳同步校验", tags: ["具身/智驾"], key: true, done: false },
+            { id: "t3", text: "引入 Ray Data 跑并发视频解码与清洗，测出吞吐提升指标", tags: ["核心壁垒"], key: true, done: false },
+            { id: "t4", text: "掌握 Parquet / DuckDB / Lance 列式多模态存储检索", tags: ["数据工程"], key: false, done: false },
+            { id: "t5", text: "收口 GitHub 作品集 V1（架构图 + 压测表 + 复现脚本）", tags: ["里程碑", "作品集"], key: true, done: false }
           ]
         },
         {
           id: "p2",
           title: "阶段二：数据治理 + VLM 打标 + 评测闭环",
-          period: "2027.01（第 5–8 周）",
+          period: "2027.01",
           collapsed: false,
           tasks: [
-            { id: "t6", text: "用 MinIO (S3) + PostgreSQL 搭轻量多模态数据资产目录（元数据/标签检索）", tags: ["Week 5", "平台能力"], key: true, done: false },
-            { id: "t7", text: "实现数据版本管理与血缘追踪（原始数据 → 清洗脚本版本 → 训练子集映射）", tags: ["Week 6", "可复现"], key: false, done: false },
-            { id: "t8", text: "接入开源 VLM（Qwen-VL）做视频片段自动语义切分、质量打分与失败初筛", tags: ["Week 7", "AI原生"], key: true, done: false },
-            { id: "t9", text: "搭轻量 Web 筛选看板（Streamlit/Gradio），支持回放筛选与一键导出", tags: ["Week 7", "可视化"], key: false, done: false },
-            { id: "t10", text: "跑通 1 次消融实验：脏数据 vs 质检数据微调策略模型，记录量化成功率提升", tags: ["Week 8", "面试杀手锏"], key: true, done: false }
+            { id: "t6", text: "MinIO (S3) + PostgreSQL 搭轻量多模态数据资产目录", tags: ["平台能力"], key: true, done: false },
+            { id: "t7", text: "实现数据版本管理与血缘追踪（原始→清洗→训练子集）", tags: ["可复现"], key: false, done: false },
+            { id: "t8", text: "接入开源 VLM（Qwen-VL）做视频自动语义切分与质量打分", tags: ["AI原生"], key: true, done: false },
+            { id: "t9", text: "搭建轻量 Web 筛选看板（Streamlit/Gradio）", tags: ["可视化"], key: false, done: false },
+            { id: "t10", text: "跑通“脏数据 vs 质检数据”微调策略模型消融实验并量化提升", tags: ["效果闭环"], key: true, done: false }
           ]
         },
         {
           id: "p3",
           title: "阶段三：简历重构 + 面试冲刺 + 春招投递",
-          period: "2027.02 — 2027.03（第 9–12 周）",
+          period: "2027.02 — 2027.03 · 锚点 02-25",
           collapsed: true,
           tasks: [
-            { id: "t11", text: "重构共达地 2 年简历：突出工业视觉数据闭环、Bad Case 挖掘与端侧交付", tags: ["Week 9", "简历"], key: true, done: false },
-            { id: "t12", text: "把作品集抽成通用多模态时序引擎，准备智驾/大模型/具身三套定制话术", tags: ["Week 9", "跨赛道"], key: true, done: false },
-            { id: "t13", text: "攻克高频工程面试题（Python并发/PyAV解码/标定同步/Ray原理/去重血缘）", tags: ["Week 10", "面试"], key: true, done: false },
-            { id: "t14", text: "2月下旬启动第一梯队投递：深圳智驾数据闭环（卓驭/元戎/比亚迪/小鹏/华为）", tags: ["Week 11", "第一梯队"], key: true, done: false },
-            { id: "t15", text: "3月冲刺第二梯队：腾讯Robotics X、自变量、优必选、逐际、智平方、帕西尼", tags: ["Week 12", "冲刺Offer"], key: true, done: false }
+            { id: "t11", text: "重构共达地 2 年简历（突出视觉数据闭环/Bad Case/端侧交付）", tags: ["简历"], key: true, done: false },
+            { id: "t12", text: "抽象作品集为通用多模态引擎，准备智驾/大模型/具身三套话术", tags: ["跨赛道"], key: true, done: false },
+            { id: "t13", text: "攻克高频工程面试题（并发/PyAV/标定同步/Ray/去重血缘）", tags: ["面试"], key: true, done: false },
+            { id: "t14", text: "第一梯队投递：深圳智驾数据闭环 & 大厂多模态团队", tags: ["第一梯队"], key: true, done: false },
+            { id: "t15", text: "第二梯队冲刺：深圳/一线头部具身数据与平台厂", tags: ["冲刺Offer"], key: true, done: false }
           ]
         }
       ];
@@ -994,13 +994,13 @@
               id: "r_init",
               date: todayStr(),
               type: "每日复盘",
-              hours: 2,
-              output: "完成 LeRobot / PushT 206 条回合基础数据质检（qc_pusht.py）与轨迹时序可视化（plot_timeline.py）。",
-              blocker: "确立 3 个月在职跃迁路线：多模态/具身/智驾 AI 数据闭环工程师。",
-              nextStep: "把 qc_pusht.py 重构为可配置 CLI 工具，支持导出结构化 JSON 质检报告。"
+              hours: 2.5,
+              output: "预热阶段收口：PushT 全量质检（206 ep / 25650 帧）、plot_timeline、01-质检报告与 ep107 样例、week03 知识点；三口径已落盘。",
+              blocker: "每日时间盒 早30min+午1h+晚1h；优先在职做作品，有 offer 再离职。",
+              nextStep: "阶段一·第 1 步：将 qc_pusht.py 升级为可配置 CLI，输出 summary.json + report.html。"
             }
           ],
-          customTodayTopic: ""
+          customTodayTopic: "阶段一·第 1 步：将 qc_pusht.py 升级为可配置 CLI，输出 summary.json + report.html；每日时间盒 早30min+午1h+晚1h。"
         };
       }
 
@@ -1081,15 +1081,20 @@
         if (data.today_topic && String(data.today_topic).trim()) {
           state.customTodayTopic = String(data.today_topic).trim();
         }
-        var doneMap = {};
+        var metaMap = {};
         data.tasks.forEach(function (t) {
-          if (t && t.id) doneMap[t.id] = !!t.done;
+          if (t && t.id) {
+            metaMap[t.id] = {
+              done: !!t.done,
+              text: t.title ? String(t.title).trim() : ""
+            };
+          }
         });
         state.phases.forEach(function (phase) {
           (phase.tasks || []).forEach(function (task) {
-            if (Object.prototype.hasOwnProperty.call(doneMap, task.id)) {
-              task.done = doneMap[task.id];
-            }
+            if (!Object.prototype.hasOwnProperty.call(metaMap, task.id)) return;
+            task.done = metaMap[task.id].done;
+            if (metaMap[task.id].text) task.text = metaMap[task.id].text;
           });
         });
         state.cloudSyncedAt = new Date().toISOString();
